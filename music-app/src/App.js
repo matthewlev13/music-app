@@ -169,7 +169,7 @@ class ChooseKey extends React.Component {
     return (
       <div>
         <label>Choose key:</label>
-        <select id="keys" value={this.props.selectedKey} onChange={this.handleChange}>
+        <select id="keys" defaultValue={this.props.selectedKey.text} onChange={this.handleChange}>
           {this.createOptions()}
         </select>
       </div>
