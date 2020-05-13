@@ -100,11 +100,20 @@ class App extends React.Component {
   }
 }
 
+
+
+
 class ChordProgression extends React.Component {
   constructor(props) {
     super(props)
+    this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
+  handleButtonClick(e){
+    console.log("inside the handleButtonClick: " + e.target.value);
+
+
+  }
   createButtons = () => {
     let buttons = [];
     var keyIdx = this.props.selectedKey.id;
@@ -113,10 +122,10 @@ class ChordProgression extends React.Component {
     for (let i = 0; i < 7; i++) {
       
       if (i == 0 | i == 1 | i == 3 | i == 4 | i == 5) {
-        buttons.push(<Button variant="primary">{this.props.keys[keyIdx].text}</Button>);
+        buttons.push(<Button variant="primary" value={this.props.keys[keyIdx].text} onClick={this.handleButtonClick}>{this.props.keys[keyIdx].text}</Button>);
         keyIdx += 2;
       } else {
-        buttons.push(<Button variant="primary">{this.props.keys[keyIdx].text}</Button>);
+        buttons.push(<Button variant="primary" value={this.props.keys[keyIdx].text} onClick={this.handleButtonClick}>{this.props.keys[keyIdx].text}</Button>);
         keyIdx += 1;
       }
       keyIdx %= 12;
@@ -130,6 +139,9 @@ class ChordProgression extends React.Component {
     return (
       <div>
         {this.createButtons()}
+        <div>
+          h a
+        </div>
       </div>
     )
   }
