@@ -1,5 +1,4 @@
 import React from 'react';
-//import logo from './logo.svg';
 import './App.css';
 import Button from 'react-bootstrap/Button';
 
@@ -7,68 +6,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.handleKeyChange = this.handleKeyChange.bind(this)
-    this.state = { keys: [
-      {
-        id: 0,
-        text: 'A',
-        key: 'key',
-      },
-      {
-        id: 1,
-        text: 'A#',
-        key: 'key'
-      },
-      {
-        id: 2,
-        text: 'B',
-        key: 'key'
-      },
-      {
-        id: 3,
-        text: 'C',
-        key: 'key'
-      },
-      {
-        id: 4,
-        text: 'C#',
-        key: 'key'
-      },
-      {
-        id: 5,
-        text: 'D',
-        key: 'key'
-      },
-      {
-        id: 6,
-        text: 'D#',
-        key: 'key'
-      },
-      {
-        id: 7,
-        text: 'E',
-        key: 'key'
-      },
-      {
-        id: 8,
-        text: 'F',
-        key: 'key'
-      },
-      {
-        id: 9,
-        text: 'F#',
-        key: 'key'
-      },
-      {
-        id: 10,
-        text: 'G',
-        key: 'key'
-      },
-      {
-        id: 11,
-        text: 'G#',
-        key: 'key'
-      }
-    ],
+    this.state = { 
+      keys: [],
       selectedKey: {
         id: 0,
         text: 'A',
@@ -76,6 +15,15 @@ class App extends React.Component {
       },
       chordProgressionView: false
     };
+  }
+
+  componentDidMount(){
+    axios.get('http://localhost:4000/getData')
+    .then((res) =>{
+      this.setState({
+        keys: res.data
+      })
+    });
   }
 
   // we are passing the keys id so we need to retrieve the actual key
@@ -86,7 +34,6 @@ class App extends React.Component {
 
   render() {
     return (
-      
       <div className="container">
         <div className="header">music app</div>
         <ChooseKey keys={this.state.keys} selectedKey={this.state.selectedKey}
@@ -101,8 +48,6 @@ class App extends React.Component {
 }
 
 
-
-
 class ChordProgression extends React.Component {
   constructor(props) {
     super(props)
@@ -111,16 +56,12 @@ class ChordProgression extends React.Component {
 
   handleButtonClick(e){
     console.log("inside the handleButtonClick: " + e.target.value);
-
-
   }
+
   createButtons = () => {
     let buttons = [];
     var keyIdx = this.props.selectedKey.id;
-    console.log("keyIdx::" + keyIdx);
-    console.log("selkey::" + this.props.selectedKey.text);
     for (let i = 0; i < 7; i++) {
-      
       if (i == 0 | i == 1 | i == 3 | i == 4 | i == 5) {
         buttons.push(<Button variant="primary" value={this.props.keys[keyIdx].text} onClick={this.handleButtonClick}>{this.props.keys[keyIdx].text}</Button>);
         keyIdx += 2;
@@ -129,7 +70,6 @@ class ChordProgression extends React.Component {
         keyIdx += 1;
       }
       keyIdx %= 12;
-
     }
     return buttons;
 
